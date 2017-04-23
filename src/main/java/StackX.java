@@ -1,4 +1,3 @@
-import lombok.*;
 
 public class StackX {
     private int maxSize;
@@ -15,21 +14,26 @@ public class StackX {
         stackArray[++top] = j;
     }
 
-    public char pop(){
+    public char pop() {
         return stackArray[top--];
     }
+
     public char peek() {
         return stackArray[top];
     }
+
     public boolean isEmpty() {
         return (top == -1);
     }
+
     public boolean isFull() {
         return (top == maxSize - 1);
-}
-    public int size(){
-        return top+1;
     }
+
+    public int size() {
+        return top + 1;
+    }
+
     public char peekN(int n) {
         return stackArray[n];
     }
