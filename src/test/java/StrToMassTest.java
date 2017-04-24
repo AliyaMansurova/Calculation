@@ -9,7 +9,6 @@ public class StrToMassTest {
 @Test
 public void MassTest(){
     String s="2+3*4+45";
-    System.out.print(StrToMass.mass(s));
     ArrayList<String> result1=new ArrayList<>();
     result1.add("2");
     result1.add("+");
@@ -19,6 +18,6 @@ public void MassTest(){
     result1.add("+");
     result1.add("45");
     assertThat(StrToMass.mass(s).size(),is(result1.size()));
-    //assertThat(StrToMass.mass(s).toArray(),is(result1.toArray()));
+    assertThat(StrToMass.mass(s).toArray(),is(result1.toArray()));
    }
 }
