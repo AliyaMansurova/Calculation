@@ -26,7 +26,7 @@ public class StrToMass {
         result.add("85");*/
         //System.out.print(s.length());
 
-       while (index<s.length())
+       /*while (index<s.length())
         {
             s=s.substring(index,s.indexOf('+'));
             result.add(s);
@@ -34,7 +34,7 @@ public class StrToMass {
             System.out.print(index);
             System.out.println(result);
            // s=s.substring(index);
-        }
+        }*/
         return result;
     }
 
