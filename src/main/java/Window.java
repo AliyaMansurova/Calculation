@@ -37,11 +37,11 @@ public class Window extends JFrame {
     String operation = "+";
 
     Window() {
-        this.setBounds(500, 100, 400, 400);
-        this.display.setHorizontalAlignment(4);
-        this.display.setFont(new Font("Dialog", 0, 50));
-        this.setResizable(false);
-        this.display.addKeyListener(new KeyAdapter() {
+        setBounds(500, 100, 400, 400);
+        display.setHorizontalAlignment(4);
+        display.setFont(new Font("Dialog", 0, 50));
+        setResizable(false);
+        display.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if((c < 48 || c > 57) && c != 43 && c != 45 && c != 42 && c != 47 && c != 40 && c != 41 && c != 46) {
@@ -50,133 +50,134 @@ public class Window extends JFrame {
 
             }
         });
-        this.button0.addActionListener(new ActionListener() {
+        button0.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "0");
+                display.setText(display.getText() + "0");
             }
         });
-        this.button1.addActionListener(new ActionListener() {
+        button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "1");
+        display.setText(display.getText() + "1");
             }
         });
-        this.button2.addActionListener(new ActionListener() {
+        button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "2");
+        display.setText(display.getText() + "2");
             }
         });
-        this.button3.addActionListener(new ActionListener() {
+        button3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "3");
+        display.setText(display.getText() + "3");
             }
         });
-        this.button4.addActionListener(new ActionListener() {
+        button4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "4");
+display.setText(display.getText() + "4");
             }
         });
-        this.button5.addActionListener(new ActionListener() {
+button5.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "5");
+                display.setText(display.getText() + "5");
             }
         });
-        this.button6.addActionListener(new ActionListener() {
+button6.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "6");
+                display.setText(display.getText() + "6");
             }
         });
-        this.button7.addActionListener(new ActionListener() {
+        button7.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "7");
+                display.setText(display.getText() + "7");
             }
         });
-        this.button8.addActionListener(new ActionListener() {
+        button8.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "8");
+                display.setText(display.getText() + "8");
             }
         });
-        this.button9.addActionListener(new ActionListener() {
+        button9.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "9");
+               display.setText(display.getText() + "9");
             }
         });
-        this.buttonCancel.addActionListener(new ActionListener() {
+        buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText("0");
+                display.setText("0");
             }
         });
-        this.buttonSum.addActionListener(new ActionListener() {
+        buttonSum.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.firstValue = Integer.valueOf(Window.this.display.getText()).intValue();
-                Window.this.display.setText(Window.this.display.getText() + "+");
+                firstValue = Integer.valueOf(display.getText()).intValue();
+                display.setText(display.getText() + "+");
             }
         });
-        this.buttonMul.addActionListener(new ActionListener() {
+        buttonMul.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "*");
+                display.setText(display.getText() + "*");
             }
         });
-        this.buttonDivide.addActionListener(new ActionListener() {
+        buttonDivide.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.firstValue = Integer.valueOf(Window.this.display.getText()).intValue();
-                Window.this.display.setText(Window.this.display.getText() + "/");
+                firstValue = Integer.valueOf(display.getText()).intValue();
+                display.setText(display.getText() + "/");
             }
         });
-        this.buttonSub.addActionListener(new ActionListener() {
+        buttonSub.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.firstValue = Integer.valueOf(Window.this.display.getText()).intValue();
-                Window.this.display.setText(Window.this.display.getText() + "-");
+                firstValue = Integer.valueOf(display.getText()).intValue();
+                display.setText(display.getText() + "-");
             }
         });
-        this.buttonParenOpen.addActionListener(new ActionListener() {
+        buttonParenOpen.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + "(");
+                display.setText(display.getText() + "(");
             }
         });
-        this.buttonParenClose.addActionListener(new ActionListener() {
+        buttonParenClose.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + ")");
+                display.setText(display.getText() + ")");
             }
         });
-        this.buttonComma.addActionListener(new ActionListener() {
+        buttonComma.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Window.this.display.setText(Window.this.display.getText() + ".");
+                display.setText(display.getText() + ".");
             }
         });
-        this.buttonBackspaceSymbol.addActionListener(new ActionListener() {
+        buttonBackspaceSymbol.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String temp = Window.this.display.getText();
-                Window.this.display.setText(temp.substring(0, temp.length() - 1));
+                String temp = display.getText();
+                display.setText(temp.substring(0, temp.length() - 1));
             }
         });
-        this.buttonStart.addActionListener(new ActionListener() {
+        buttonStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
             }
         });
-        this.setLayout(new BorderLayout());
-        this.add(this.display, "North");
-        this.add(this.buttonPanel, "Center");
-        this.buttonPanel.add(this.buttonParenOpen);
-        this.buttonPanel.add(this.buttonParenClose);
-        this.buttonPanel.add(this.buttonCancel);
-        this.buttonPanel.add(this.buttonDivide);
-        this.buttonPanel.add(this.button7);
-        this.buttonPanel.add(this.button8);
-        this.buttonPanel.add(this.button9);
-        this.buttonPanel.add(this.buttonMul);
-        this.buttonPanel.add(this.button4);
-        this.buttonPanel.add(this.button5);
-        this.buttonPanel.add(this.button6);
-        this.buttonPanel.add(this.buttonSub);
-        this.buttonPanel.add(this.button1);
-        this.buttonPanel.add(this.button2);
-        this.buttonPanel.add(this.button3);
-        this.buttonPanel.add(this.buttonSum);
-        this.buttonPanel.add(this.buttonBackspaceSymbol);
-        this.buttonPanel.add(this.button0);
-        this.buttonPanel.add(this.buttonComma);
-        this.buttonPanel.add(this.buttonStart);
-        this.setVisible(true);
+        setLayout(new BorderLayout());
+        add(display, "North");
+        add(buttonPanel, "Center");
+        buttonPanel.add(buttonParenOpen);
+        buttonPanel.add(buttonParenClose);
+        buttonPanel.add(buttonCancel);
+        buttonPanel.add(buttonDivide);
+        buttonPanel.add(button7);
+        buttonPanel.add(button8);
+        buttonPanel.add(button9);
+        buttonPanel.add(buttonMul);
+        buttonPanel.add(button4);
+        buttonPanel.add(button5);
+        buttonPanel.add(button6);
+        buttonPanel.add(buttonSub);
+        buttonPanel.add(button1);
+        buttonPanel.add(button2);
+        buttonPanel.add(button3);
+        buttonPanel.add(buttonSum);
+        buttonPanel.add(buttonBackspaceSymbol);
+        buttonPanel.add(button0);
+        buttonPanel.add(buttonComma);
+        buttonPanel.add(buttonStart);
+        setVisible(true);
     }
 
     public static void main(String[] args) {
