@@ -1,25 +1,31 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class StackX {
     private int maxSize;
-    private char[] stackArray;
+    private List<String> stackArray;
     private int top;
 
     public StackX(int size) {
         maxSize = size;
-        stackArray = new char[maxSize];
+        stackArray=new ArrayList<>(maxSize);
         top = -1;
     }
 
-    public void push(char j) {
-        stackArray[++top] = j;
+    public void push(String j) {
+        stackArray.add(j);
+        top++;
     }
 
-    public char pop() {
-        return stackArray[top--];
+    public String pop() {
+        String element=stackArray.get(top);
+        stackArray.remove(top);
+                top--;
+        return element;
     }
 
-    public char peek() {
-        return stackArray[top];
+    public String peek() {
+        return stackArray.get(top);
     }
 
     public boolean isEmpty() {
@@ -34,18 +40,8 @@ public class StackX {
         return top + 1;
     }
 
-    public char peekN(int n) {
-        return stackArray[n];
-    }
-
-    public void displayStack(String s) {
-        System.out.print(s);
-        System.out.print("Stack (bottom-->top): ");
-        for (int j = 0; j < size(); j++) {
-            System.out.print(peekN(j));
-            System.out.print(' ');
-        }
-        System.out.println("");
+    public String peekN(int n) {
+        return stackArray.get(n);
     }
 
     public int getMaxSize() {
@@ -56,11 +52,11 @@ public class StackX {
         this.maxSize = maxSize;
     }
 
-    public char[] getStackArray() {
+    public List<String> getStackArray() {
         return stackArray;
     }
 
-    public void setStackArray(char[] stackArray) {
+    public void setStackArray(List<String> stackArray) {
         this.stackArray = stackArray;
     }
 
@@ -71,4 +67,5 @@ public class StackX {
     public void setTop(int top) {
         this.top = top;
     }
+
 }

@@ -1,58 +1,63 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class InToPost {
     private StackX theStack;
-    private String input;
-    private String output = "";
+    // private String input;
+    //private String output = "";
+    private List<String> input;
+    private List<String> output;
 
-    public InToPost(String in) {
+    public InToPost(List<String> in) {
         input = in;
-        int stackSize = input.length();
+        int stackSize = input.size();
         theStack = new StackX(stackSize);
+        output=new ArrayList<>();
     }
 
     // Преобразование в постфиксную форму
-    public String doTrans() {
+    public List<String> doTrans() {
         {
-            for (int j = 0; j < input.length(); j++) {
-                char ch = input.charAt(j);
-                //theStack.displayStack("For "+ch+" ");
+            for (int j = 0; j < input.size(); j++) {
+                //char ch = input.charAt(j);
+                String ch = input.get(j);
                 switch (ch) {
-                    case '+':
-                    case '-':
+                    case "+":
+                    case "-":
                         gotOper(ch, 1);
                         break;
-                    case '*':
-                    case '/':
+                    case "*":
+                    case "/":
                         gotOper(ch, 2);
                         break;
-                    case '(':
+                    case "(":
                         theStack.push(ch);
                         break;
-                    case ')':
+                    case ")":
                         gotParen(ch);
                         break;
                     default:
-                        output = output + ch;
+                        output.add(ch);
                         break;
                 }
             }
 
             while (!theStack.isEmpty()) {
-                output = output + theStack.pop();
+                output.add(theStack.pop());
             }
             return output;
         }
     }
 
-    public void gotOper(char opThis, int prec1) {
+    public void gotOper(String opThis, int prec1) {
         while (!theStack.isEmpty()) {
-            char opTop = theStack.pop();//последний элемент стека
-            if (opTop == '(') {
+            String opTop = theStack.pop();//последний элемент стека
+            if (opTop.equals("(")) {
                 theStack.push(opTop);
                 break;
             } else {
                 int prec2;//приоритет последнего операнда
-                if (opTop == '+' || opTop == '-')
+                if (opTop.equals("+") || opTop.equals("-"))
                     prec2 = 1;
                 else
                     prec2 = 2;
@@ -61,22 +66,20 @@ public class InToPost {
                     theStack.push(opTop);
                     break;
                 } else
-                    output = output + opTop;
+                    output.add(opTop);
             }
         }
-
         theStack.push(opThis);
     }
 
-    public void gotParen(char ch) {
+    public void gotParen(String ch) {
         while (!theStack.isEmpty()) {
-            char chx = theStack.pop();
-            if (chx == '(')
+            String chx = theStack.pop();
+            if (chx.equals("("))
                 break;
             else
-                output = output + chx;
+                output.add(chx);
         }
-
     }
 
     public StackX getTheStack() {
@@ -87,19 +90,19 @@ public class InToPost {
         this.theStack = theStack;
     }
 
-    public String getInput() {
+    public List<String> getInput() {
         return input;
     }
 
-    public void setInput(String input) {
+    public void setInput(List<String> input) {
         this.input = input;
     }
 
-    public String getOutput() {
+    public List<String> getOutput() {
         return output;
     }
 
-    public void setOutput(String output) {
+    public void setOutput(List<String> output) {
         this.output = output;
     }
 }
