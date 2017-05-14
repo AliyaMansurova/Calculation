@@ -8,12 +8,30 @@ public class StrToMass {
         boolean f = false;
 
         for (int j = 0; j < s.length(); j++) {
-            if ((s.charAt(j) == '+') || (s.charAt(j) == '-') || (s.charAt(j) == '*')
+            if ((j==0)&&(s.charAt(j)=='-'))
+                i=j;
+            else {
+                if (s.charAt(j) == '-') {
+                    if (s.charAt(j - 1) == '(')
+                        i = j;
+                    else if (j > i) {
+                        result.add(s.substring(i, j));
+                        result.add(s.substring(j, j + 1));
+                        i = j + 1;
+                    }
+                }
+            }
+            if ((s.charAt(j) == '+') || (s.charAt(j) == '*')
                     || (s.charAt(j) == '/') || (s.charAt(j) == '(') || (s.charAt(j) == ')')) {
                 if (j > i) {
                     result.add(s.substring(i, j));
                     result.add(s.substring(j, j + 1));
                 }
+                if((s.charAt(j)=='(')) {
+                    result.add("(");
+                }
+                if((s.charAt(j-1)==')'))
+                    result.add(String.valueOf(s.charAt(j)));
                 i = j + 1;
             }
         }

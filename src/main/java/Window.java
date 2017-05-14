@@ -37,6 +37,7 @@ public class Window extends JFrame {
     String operation = "+";
 
     Window() {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBounds(500, 100, 400, 400);
         display.setHorizontalAlignment(4);
         display.setFont(new Font("Dialog", 0, 50));
@@ -44,10 +45,16 @@ public class Window extends JFrame {
         display.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if((c < 48 || c > 57) && c != 43 && c != 45 && c != 42 && c != 47 && c != 40 && c != 41 && c != 46) {
+                if ((c < 48 || c > 57) && c != 43 && c != 45 && c != 42 && c != 47 && c != 40 && c != 41 && c != 46 && c != 32 ) {
                     e.consume();
                 }
-
+                if(c==32){
+                    String expression=display.getText();
+                    InToPost inToPost=new InToPost(StrToMass.mass(expression));
+                    ParsePost parsePost=new ParsePost(inToPost.doTrans());
+                    display.removeAll();
+                    display.setText(Double.toString(parsePost.doParse()));
+                }
             }
         });
         button0.addActionListener(new ActionListener() {
@@ -57,30 +64,30 @@ public class Window extends JFrame {
         });
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-        display.setText(display.getText() + "1");
+                display.setText(display.getText() + "1");
             }
         });
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-        display.setText(display.getText() + "2");
+                display.setText(display.getText() + "2");
             }
         });
         button3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-        display.setText(display.getText() + "3");
+                display.setText(display.getText() + "3");
             }
         });
         button4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-display.setText(display.getText() + "4");
+                display.setText(display.getText() + "4");
             }
         });
-button5.addActionListener(new ActionListener() {
+        button5.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 display.setText(display.getText() + "5");
             }
         });
-button6.addActionListener(new ActionListener() {
+        button6.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 display.setText(display.getText() + "6");
             }
@@ -97,40 +104,66 @@ button6.addActionListener(new ActionListener() {
         });
         button9.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               display.setText(display.getText() + "9");
+                display.setText(display.getText() + "9");
             }
         });
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                display.setText("0");
+                display.setText("");
             }
         });
         buttonSum.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                firstValue = Integer.valueOf(display.getText()).intValue();
-                display.setText(display.getText() + "+");
+                String expression = display.getText();
+                if ((expression.length()>1)||(expression.charAt(0)!='-')) {
+                    check();
+                    char ch = expression.charAt(expression.length() - 1);
+                    if (!(ch == '('))
+                        display.setText(display.getText() + "+");
+                }
             }
         });
         buttonMul.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "*");
+                String expression = display.getText();
+                if ((expression.length()>1)||(expression.charAt(0)!='-')) {
+                    check();
+                    char ch = expression.charAt(expression.length() - 1);
+                    if (!(ch == '('))
+                        display.setText(display.getText() + "*");
+                }
             }
         });
         buttonDivide.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                firstValue = Integer.valueOf(display.getText()).intValue();
-                display.setText(display.getText() + "/");
+                String expression = display.getText();
+                if ((expression.length()>1)||(expression.charAt(0)!='-')) {
+                    check();
+                    char ch = expression.charAt(expression.length() - 1);
+                    if (!(ch == '('))
+                        display.setText(display.getText() + "/");
+                }
+
             }
         });
         buttonSub.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                firstValue = Integer.valueOf(display.getText()).intValue();
-                display.setText(display.getText() + "-");
+                String expression = display.getText();
+                if (!expression.isEmpty()) {
+                    check();
+                    display.setText(display.getText() + "-");
+                }
+                else  display.setText(display.getText() + "-");
             }
         });
         buttonParenOpen.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "(");
+                String expression=display.getText();
+                char ch = expression.charAt(expression.length() - 1);
+                if ((ch != '+') && (ch != '-') && (ch != '*') && (ch != '/')&& (ch != '(')) {
+                display.setText(display.getText() + "*");
+                }
+                    display.setText(display.getText() + "(");
             }
         });
         buttonParenClose.addActionListener(new ActionListener() {
@@ -151,7 +184,24 @@ button6.addActionListener(new ActionListener() {
         });
         buttonStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                String expression=display.getText();
+                int open=0;
+                int close=0;
+                for (int i=0;i<expression.length();i++){
+                    if (expression.charAt(i)=='(')
+                        open++;
+                    if (expression.charAt(i)==')')
+                        close++;
+                }
+                if(open!=close){
+                    display.setText("Error");
 
+                }else {
+                    InToPost inToPost = new InToPost(StrToMass.mass(expression));
+                    ParsePost parsePost = new ParsePost(inToPost.doTrans());
+                    display.removeAll();
+                    display.setText(Double.toString(parsePost.doParse()));
+                }
             }
         });
         setLayout(new BorderLayout());
@@ -180,6 +230,26 @@ button6.addActionListener(new ActionListener() {
         setVisible(true);
     }
 
+    public void check(){
+        String expression=display.getText();
+            char ch = expression.charAt(expression.length() - 1);
+            System.out.println(ch);
+            if ((ch == '+') || (ch == '-') || (ch == '*') || (ch == '/')) {
+                expression = expression.substring(0, expression.length() - 1);
+                System.out.print(expression);
+                display.removeAll();
+                display.setText(expression);
+        }
+    }
+    public  void checkParanthesis(){
+        String expression=display.getText();
+        char ch=expression.charAt(expression.length()-1);
+        System.out.println(ch);
+        if((ch=='(')){
+
+        }
+
+    }
     public static void main(String[] args) {
         new Window();
     }

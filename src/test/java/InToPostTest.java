@@ -36,10 +36,10 @@ public class InToPostTest {
         inToPost.gotOper("*", 2);
         inToPost.getTheStack().push("(");
         inToPost.gotOper("+", 1);
-        inToPost.gotOper("*", 2);
+        inToPost.gotOper("/", 2);
         inToPost.gotParen(")");
         ArrayList<String> result2 = new ArrayList<>();
-        result2.add("*");
+        result2.add("/");
         result2.add("+");
         assertArrayEquals(inToPost.getOutput().toArray(), result2.toArray());
     }

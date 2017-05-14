@@ -3,8 +3,6 @@ import java.util.List;
 
 public class InToPost {
     private StackX theStack;
-    // private String input;
-    //private String output = "";
     private List<String> input;
     private List<String> output;
 
