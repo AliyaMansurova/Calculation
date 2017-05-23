@@ -5,13 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import java.io.IOException;
+import javax.swing.*;
 
 public class Window extends JFrame {
-    JTextField display = new JTextField("", 10);
+    JTextField display = new JTextField("", 6);
     JPanel buttonPanel = new JPanel(new GridLayout(5, 4));
     JButton button0 = new JButton("0");
     JButton button1 = new JButton("1");
@@ -40,18 +38,18 @@ public class Window extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBounds(500, 100, 400, 400);
         display.setHorizontalAlignment(4);
-        display.setFont(new Font("Dialog", 0, 50));
+        display.setFont(new Font("Dialog", 0, 30));
         setResizable(false);
         display.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if ((c < 48 || c > 57) && c != 43 && c != 45 && c != 42 && c != 47 && c != 40 && c != 41 && c != 46 && c != 32 ) {
+                if ((c < 48 || c > 57) && c != 43 && c != 45 && c != 42 && c != 47 && c != 40 && c != 41 && c != 46 && c != 32) {
                     e.consume();
                 }
-                if(c==32){
-                    String expression=display.getText();
-                    InToPost inToPost=new InToPost(StrToMass.mass(expression));
-                    ParsePost parsePost=new ParsePost(inToPost.doTrans());
+                if (c == 32) {
+                    String expression = display.getText();
+                    InToPost inToPost = new InToPost(StrToMass.mass(expression));
+                    ParsePost parsePost = new ParsePost(inToPost.doTrans());
                     display.removeAll();
                     display.setText(Double.toString(parsePost.doParse()));
                 }
@@ -115,10 +113,15 @@ public class Window extends JFrame {
         buttonSum.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String expression = display.getText();
-                if ((expression.length()>1)||(expression.charAt(0)!='-')) {
+                char ch2 = '0';
+                if ((expression.length() > 1) || (expression.charAt(0) != '-')) {
                     check();
                     char ch = expression.charAt(expression.length() - 1);
-                    if (!(ch == '('))
+                    if ((expression.length() > 2)) {
+                        ch2 = expression.charAt(expression.length() - 2);
+                        if (!(ch == '(') && !((ch == '-') && (ch2 == '(')))
+                            display.setText(display.getText() + "+");
+                    } else if (!(ch == '(') && !((ch == '-')))
                         display.setText(display.getText() + "+");
                 }
             }
@@ -126,22 +129,32 @@ public class Window extends JFrame {
         buttonMul.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String expression = display.getText();
-                if ((expression.length()>1)||(expression.charAt(0)!='-')) {
+                char ch2 = '0';
+                if ((expression.length() > 1) || (expression.charAt(0) != '-')) {
                     check();
                     char ch = expression.charAt(expression.length() - 1);
-                    if (!(ch == '('))
-                        display.setText(display.getText() + "*");
+                    if ((expression.length() > 2)) {
+                        ch2 = expression.charAt(expression.length() - 2);
+                        if (!(ch == '(') && !((ch == '-') && (ch2 == '(')))
+                            display.setText(display.getText() + "*");
+                    } else if (!(ch == '(') && !((ch == '-')))
+                        display.setText(display.getText() + "+");
                 }
             }
         });
         buttonDivide.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String expression = display.getText();
-                if ((expression.length()>1)||(expression.charAt(0)!='-')) {
+                char ch2 = '0';
+                if ((expression.length() > 1) || (expression.charAt(0) != '-')) {
                     check();
                     char ch = expression.charAt(expression.length() - 1);
-                    if (!(ch == '('))
-                        display.setText(display.getText() + "/");
+                    if ((expression.length() > 2)) {
+                        ch2 = expression.charAt(expression.length() - 2);
+                        if (!(ch == '(') && !((ch == '-') && (ch2 == '(')))
+                            display.setText(display.getText() + "/");
+                    } else if (!(ch == '(') && !((ch == '-')))
+                        display.setText(display.getText() + "+");
                 }
 
             }
@@ -152,18 +165,19 @@ public class Window extends JFrame {
                 if (!expression.isEmpty()) {
                     check();
                     display.setText(display.getText() + "-");
-                }
-                else  display.setText(display.getText() + "-");
+                } else display.setText(display.getText() + "-");
             }
         });
         buttonParenOpen.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String expression=display.getText();
-                char ch = expression.charAt(expression.length() - 1);
-                if ((ch != '+') && (ch != '-') && (ch != '*') && (ch != '/')&& (ch != '(')) {
-                display.setText(display.getText() + "*");
+                String expression = display.getText();
+                if (expression.length() > 0) {
+                    char ch = expression.charAt(expression.length() - 1);
+                    if ((ch != '+') && (ch != '-') && (ch != '*') && (ch != '/') && (ch != '(')) {
+                        display.setText(display.getText() + "*");
+                    }
                 }
-                    display.setText(display.getText() + "(");
+                display.setText(display.getText() + "(");
             }
         });
         buttonParenClose.addActionListener(new ActionListener() {
@@ -173,7 +187,12 @@ public class Window extends JFrame {
         });
         buttonComma.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + ".");
+                String expression = display.getText();
+                if (expression.length() > 0) {
+                    char ch = expression.charAt(expression.length() - 1);
+                    if ((ch != '+') && (ch != '-') && (ch != '*') && (ch != '/') && (ch != '('))
+                        display.setText(display.getText() + ".");
+                }
             }
         });
         buttonBackspaceSymbol.addActionListener(new ActionListener() {
@@ -184,23 +203,28 @@ public class Window extends JFrame {
         });
         buttonStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String expression=display.getText();
-                int open=0;
-                int close=0;
-                for (int i=0;i<expression.length();i++){
-                    if (expression.charAt(i)=='(')
+                try{
+                String expression = display.getText();
+                int open = 0;
+                int close = 0;
+                for (int i = 0; i < expression.length(); i++) {
+                    if (expression.charAt(i) == '(')
                         open++;
-                    if (expression.charAt(i)==')')
+                    if (expression.charAt(i) == ')')
                         close++;
                 }
-                if(open!=close){
+                if (open != close) {
                     display.setText("Error");
 
-                }else {
+                } else {
                     InToPost inToPost = new InToPost(StrToMass.mass(expression));
                     ParsePost parsePost = new ParsePost(inToPost.doTrans());
                     display.removeAll();
                     display.setText(Double.toString(parsePost.doParse()));
+                }}
+                catch(Exception e1){
+                    display.removeAll();
+                    display.setText("Error");
                 }
             }
         });
@@ -230,26 +254,17 @@ public class Window extends JFrame {
         setVisible(true);
     }
 
-    public void check(){
-        String expression=display.getText();
-            char ch = expression.charAt(expression.length() - 1);
-            System.out.println(ch);
-            if ((ch == '+') || (ch == '-') || (ch == '*') || (ch == '/')) {
-                expression = expression.substring(0, expression.length() - 1);
-                System.out.print(expression);
-                display.removeAll();
-                display.setText(expression);
-        }
-    }
-    public  void checkParanthesis(){
-        String expression=display.getText();
-        char ch=expression.charAt(expression.length()-1);
+    public void check() {
+        String expression = display.getText();
+        char ch = expression.charAt(expression.length() - 1);
         System.out.println(ch);
-        if((ch=='(')){
-
+        if ((ch == '+') || (ch == '-') || (ch == '*') || (ch == '/')) {
+            expression = expression.substring(0, expression.length() - 1);
+            display.removeAll();
+            display.setText(expression);
         }
-
     }
+
     public static void main(String[] args) {
         new Window();
     }
