@@ -1,9 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Locale;
 import javax.swing.*;
 
-public class Window extends JFrame implements ItemListener{
+public class Window extends JFrame implements ItemListener {
     JTextField display = new JTextField("", 6);
     JPanel buttonPanel = new JPanel(new GridLayout(6, 4));
     JButton button0 = new JButton("0");
@@ -26,11 +25,11 @@ public class Window extends JFrame implements ItemListener{
     JButton buttonParenClose = new JButton(")");
     JButton buttonComma = new JButton(".");
     JButton buttonBackspaceSymbol = new JButton("<-");
-    JButton buttonFactorial= new JButton("n!");
+    JButton buttonFactorial = new JButton("n!");
     ButtonGroup group = new ButtonGroup();
     JRadioButton simpleCalc = new JRadioButton("Calculation", true);
     JRadioButton factorial = new JRadioButton("Factorial", false);
-    boolean culcFuctorial=false;
+
     Window() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setBounds(500, 100, 400, 400);
@@ -40,7 +39,7 @@ public class Window extends JFrame implements ItemListener{
         display.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if ( (c != 8)&&(c != 37)&&(c != 39)) {
+                if ((c != 8) && (c != 37) && (c != 39)) {
                     e.consume();
                 }
 
@@ -103,61 +102,264 @@ public class Window extends JFrame implements ItemListener{
         button0.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "0");
+                String expression = display.getText();
+                if ((expression.length() == 0))
+                    display.setText(display.getText() + "0");
+                if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
+                    display.setText(display.getText() + "*");
+                    display.setText(display.getText() + "0");
+                } else
+                    if ((expression.length() > 0 )&&(expression.charAt(expression.length() - 1) != '0')) {
+                    if ((expression.charAt(expression.length() - 1) == '.') || ((expression.charAt(expression.length() - 1) > 48)
+                            && (expression.charAt(expression.length() - 1) < 58)) || (expression.charAt(expression.length() - 1) == '+')
+                            || (expression.charAt(expression.length() - 1) == '-') || (expression.charAt(expression.length() - 1) == '*')
+                            || (expression.charAt(expression.length() - 1) == '/')|| (expression.charAt(expression.length() - 1) == '(')
+                            ||(expression.charAt(expression.length() - 1) != ')'))
+                        display.setText(display.getText() + "0");
+                }else
+                    if ((expression.length() > 1)) {
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                    (expression.charAt(expression.length()-2) > 47)
+                            ||(expression.charAt(expression.length()-2) < 57) &&
+                            (expression.charAt(expression.length() - 2) != '+')&&(expression.charAt(expression.length() - 2) != '-') &&
+                            (expression.charAt(expression.length() - 2) != '*')
+                            &&(expression.charAt(expression.length() - 2) != '/')&&(expression.charAt(expression.length() - 2) != '('))
+                    display.setText(display.getText() + "0");
+                }
             }
         });
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "1");
+                String expression = display.getText();
+                if ((expression.length() == 0))//если это первая цифра-написать
+                    display.setText(display.getText() + "1");
+                if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
+                    display.setText(display.getText() + "*");
+                    display.setText(display.getText() + "1");
+                } else if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) != '0')) {
+                    display.setText(display.getText() + "1");
+                } else if ((expression.length() > 1)) {
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) > 47)
+                            && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                        display.setText(display.getText() + "1");
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                                    (expression.charAt(expression.length() - 2) == '*')
+                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                        display.setText(display.getText() + ".");
+                        display.setText(display.getText() + "1");
+                    }
+                }
             }
         });
         button2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "2");
+                String expression = display.getText();
+                if ((expression.length() == 0))//если это первая цифра-написать
+                    display.setText(display.getText() + "2");
+                if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
+                    display.setText(display.getText() + "*");
+                    display.setText(display.getText() + "2");
+                } else if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) != '0')) {
+                    display.setText(display.getText() + "2");
+                } else if ((expression.length() > 1)) {
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) > 47)
+                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                        display.setText(display.getText() + "2");
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                                    (expression.charAt(expression.length() - 2) == '*')
+                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                        display.setText(display.getText() + ".");
+                        display.setText(display.getText() + "2");
+                    }
+                }
             }
         });
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "3");
+                String expression = display.getText();
+                if ((expression.length() == 0))//если это первая цифра-написать
+                    display.setText(display.getText() + "3");
+                if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
+                    display.setText(display.getText() + "*");
+                    display.setText(display.getText() + "3");
+                } else if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) != '0')) {
+                    display.setText(display.getText() + "3");
+                } else if ((expression.length() > 1)) {
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) > 47)
+                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                        display.setText(display.getText() + "3");
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                                    (expression.charAt(expression.length() - 2) == '*')
+                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                        display.setText(display.getText() + ".");
+                        display.setText(display.getText() + "3");
+                    }
+                }
             }
         });
         button4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "4");
+                String expression = display.getText();
+                if ((expression.length() == 0))//если это первая цифра-написать
+                    display.setText(display.getText() + "4");
+                if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
+                    display.setText(display.getText() + "*");
+                    display.setText(display.getText() + "4");
+                } else if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) != '0')) {
+                    display.setText(display.getText() + "4");
+                } else if ((expression.length() > 1)) {
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) > 47)
+                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                        display.setText(display.getText() + "4");
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                                    (expression.charAt(expression.length() - 2) == '*')
+                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                        display.setText(display.getText() + ".");
+                        display.setText(display.getText() + "4");
+                    }
+                }
             }
         });
         button5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "5");
+                String expression = display.getText();
+                if ((expression.length() == 0))//если это первая цифра-написать
+                    display.setText(display.getText() + "5");
+                if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
+                    display.setText(display.getText() + "*");
+                    display.setText(display.getText() + "5");
+                } else if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) != '0')) {
+                    display.setText(display.getText() + "5");
+                } else if ((expression.length() > 1)) {
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) > 47)
+                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                        display.setText(display.getText() + "5");
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                                    (expression.charAt(expression.length() - 2) == '*')
+                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                        display.setText(display.getText() + ".");
+                        display.setText(display.getText() + "5");
+                    }
+                }
             }
         });
         button6.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "6");
+                String expression = display.getText();
+                if ((expression.length() == 0))//если это первая цифра-написать
+                    display.setText(display.getText() + "6");
+                if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
+                    display.setText(display.getText() + "*");
+                    display.setText(display.getText() + "6");
+                } else if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) != '0')) {
+                    display.setText(display.getText() + "6");
+                } else if ((expression.length() > 1)) {
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) > 47)
+                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                        display.setText(display.getText() + "6");
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                                    (expression.charAt(expression.length() - 2) == '*')
+                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                        display.setText(display.getText() + ".");
+                        display.setText(display.getText() + "6");
+                    }
+                }
             }
         });
         button7.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "7");
+                String expression = display.getText();
+                if ((expression.length() == 0))//если это первая цифра-написать
+                    display.setText(display.getText() + "7");
+                if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
+                    display.setText(display.getText() + "*");
+                    display.setText(display.getText() + "7");
+                } else if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) != '0')) {
+                    display.setText(display.getText() + "7");
+                } else if ((expression.length() > 1)) {
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) > 47)
+                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                        display.setText(display.getText() + "7");
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                                    (expression.charAt(expression.length() - 2) == '*')
+                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                        display.setText(display.getText() + ".");
+                        display.setText(display.getText() + "7");
+                    }
+                }
             }
         });
         button8.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "8");
+                String expression = display.getText();
+                if ((expression.length() == 0))//если это первая цифра-написать
+                    display.setText(display.getText() + "8");
+                if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
+                    display.setText(display.getText() + "*");
+                    display.setText(display.getText() + "8");
+                } else if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) != '0')) {
+                    display.setText(display.getText() + "8");
+                } else if ((expression.length() > 1)) {
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) > 47)
+                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                        display.setText(display.getText() + "8");
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                                    (expression.charAt(expression.length() - 2) == '*')
+                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                        display.setText(display.getText() + ".");
+                        display.setText(display.getText() + "8");
+                    }
+                }
             }
         });
         button9.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + "9");
+                String expression = display.getText();
+                if ((expression.length() == 0))//если это первая цифра-написать
+                    display.setText(display.getText() + "9");
+                if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
+                    display.setText(display.getText() + "*");
+                    display.setText(display.getText() + "9");
+                } else if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) != '0')) {
+                    display.setText(display.getText() + "9");
+                } else if ((expression.length() > 1)) {
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) > 47)
+                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                        display.setText(display.getText() + "9");
+                    if ((expression.charAt(expression.length() - 1) == '0') &&
+                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                                    (expression.charAt(expression.length() - 2) == '*')
+                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                        display.setText(display.getText() + ".");
+                        display.setText(display.getText() + "9");
+                    }
+                }
             }
         });
         buttonCancel.addActionListener(new ActionListener() {
@@ -251,9 +453,8 @@ public class Window extends JFrame implements ItemListener{
             public void actionPerformed(ActionEvent e) {
                 String expression = display.getText();
                 if (expression.length() > 0) {
-                    char ch = expression.charAt(expression.length() - 1);
-                    if ((ch != '+') && (ch != '-') && (ch != '*') && (ch != '/') && (ch != '('))
-                        display.setText(display.getText() + ".");
+                    check();
+                    display.setText(display.getText() + ".");
                 }
             }
         });
@@ -267,51 +468,51 @@ public class Window extends JFrame implements ItemListener{
         buttonFactorial.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String temp = display.getText();
-                display.setText(display.getText() + "!");
+                try {
+                    String expression = display.getText();
+                    if (expression.length() > 0) {
+                        Long exp=Long.parseLong(expression);
+                        if((exp<21)&&(exp>0)){
+                        Long result = Factorial.factorial(exp);
+                        display.setText(Long.toString(result));}
+                        else JOptionPane.showMessageDialog(new JFrame(), "Error!\n" +
+                                "The factorial of a given number is too large");
+                    }
+
+                } catch (Exception e1) {
+                    JOptionPane.showMessageDialog(new JFrame(), "Error!\n" +
+                            "Invalid expression!");
+                }
             }
         });
         buttonStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!culcFuctorial){
-                try{
-                String expression = display.getText();
-                int open = 0;
-                int close = 0;
-                for (int i = 0; i < expression.length(); i++) {
-                    if (expression.charAt(i) == '(')
-                        open++;
-                    if (expression.charAt(i) == ')')
-                        close++;
-                }
-                if (open != close) {
-                    JOptionPane.showMessageDialog(new JFrame(), "Error!The number of parentheses does not match!");
+                try {
+                    String expression = display.getText();
+                    int open = 0;
+                    int close = 0;
+                    for (int i = 0; i < expression.length(); i++) {
+                        if (expression.charAt(i) == '(')
+                            open++;
+                        if (expression.charAt(i) == ')')
+                            close++;
+                    }
+                    if (open != close) {
+                        JOptionPane.showMessageDialog(new JFrame(), "Error!The number of parentheses does not match!");
 
-                } else {
-                    InToPost inToPost = new InToPost(StrToMass.mass(expression));
-                    ParsePost parsePost = new ParsePost(inToPost.doTrans());
-                    display.removeAll();
-                    display.setText(Double.toString(parsePost.doParse()));
-                }}
-                catch(Exception e1){
+                    } else {
+                        InToPost inToPost = new InToPost(StrToMass.mass(expression));
+                        ParsePost parsePost = new ParsePost(inToPost.doTrans());
+                        display.removeAll();
+                        display.setText(Double.toString(parsePost.doParse()));
+                    }
+                } catch (Exception e1) {
                     JOptionPane.showMessageDialog(new JFrame(), "Error!\n" +
                             "Invalid expression!");
                 }
             }
-            else {
-                    try {
-                        String expression = display.getText();
-                        expression = expression.substring(0, expression.length() - 1);
-                        int result=Factorial.factorial(Integer.parseInt(expression));
-                        display.setText(Integer.toString(result));
 
-                    } catch (Exception e1) {
-                        JOptionPane.showMessageDialog(new JFrame(), "Error!\n" +
-                                "Invalid expression!");
-                    }
-                }
-            }
         });
         setLayout(new BorderLayout());
         add(display, "North");
@@ -351,7 +552,7 @@ public class Window extends JFrame implements ItemListener{
         String expression = display.getText();
         char ch = expression.charAt(expression.length() - 1);
         System.out.println(ch);
-        if ((ch == '+') || (ch == '-') || (ch == '*') || (ch == '/')) {
+        if ((ch == '+') || (ch == '-') || (ch == '*') || (ch == '/') || (ch == '.')) {
             expression = expression.substring(0, expression.length() - 1);
             display.removeAll();
             display.setText(expression);
@@ -361,9 +562,10 @@ public class Window extends JFrame implements ItemListener{
     public static void main(String[] args) {
         new Window();
     }
+
     @Override
     public void itemStateChanged(ItemEvent e) {
-        if(e.getItemSelectable()==simpleCalc){
+        if (e.getItemSelectable() == simpleCalc) {
             buttonFactorial.setEnabled(false);
             buttonComma.setEnabled(true);
             buttonSum.setEnabled(true);
@@ -372,9 +574,10 @@ public class Window extends JFrame implements ItemListener{
             buttonDivide.setEnabled(true);
             buttonParenClose.setEnabled(true);
             buttonParenOpen.setEnabled(true);
-            culcFuctorial=false;
+            buttonStart.setEnabled(true);
+
         }
-        if(e.getItemSelectable()==factorial){
+        if (e.getItemSelectable() == factorial) {
             buttonFactorial.setEnabled(true);
             buttonComma.setEnabled(false);
             buttonSum.setEnabled(false);
@@ -383,7 +586,8 @@ public class Window extends JFrame implements ItemListener{
             buttonDivide.setEnabled(false);
             buttonParenClose.setEnabled(false);
             buttonParenOpen.setEnabled(false);
-            culcFuctorial=true;
+            buttonStart.setEnabled(false);
+
         }
     }
 }
