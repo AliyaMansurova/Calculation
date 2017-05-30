@@ -554,7 +554,7 @@ public class Window extends JFrame implements ItemListener {
                         InToPost inToPost = new InToPost(StrToMass.mass(expression));
                         ParsePost parsePost = new ParsePost(inToPost.doTrans());
                         Double result=(parsePost.doParse());
-                        if((result!=Infinity) && (result!=-Infinity)&&(result!=NaN)){
+                        if((result!=Infinity) && (result!=-Infinity)&&(!result.isNaN())){
                         display.removeAll();
                         display.setText(Double.toString(result));}
                         else JOptionPane.showMessageDialog(new JFrame(), "Error!Can not be divided by zero");
