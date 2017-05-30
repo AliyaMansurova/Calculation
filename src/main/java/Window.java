@@ -2,9 +2,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import static jdk.nashorn.internal.objects.Global.Infinity;
+import static jdk.nashorn.internal.objects.Global.NaN;
+
 public class Window extends JFrame implements ItemListener {
     JTextField display = new JTextField("", 6);
-    JPanel buttonPanel = new JPanel(new GridLayout(6, 4));
+    GridBagLayout layout_calc = new GridBagLayout();
+    GridBagConstraints c = new GridBagConstraints();
+    //JPanel buttonPanel = new JPanel(new GridLayout(6, 4));
     JButton button0 = new JButton("0");
     JButton button1 = new JButton("1");
     JButton button2 = new JButton("2");
@@ -108,23 +113,21 @@ public class Window extends JFrame implements ItemListener {
                 if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
                     display.setText(display.getText() + "*");
                     display.setText(display.getText() + "0");
-                } else
-                    if ((expression.length() > 0 )&&(expression.charAt(expression.length() - 1) != '0')) {
+                } else if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) != '0')) {
                     if ((expression.charAt(expression.length() - 1) == '.') || ((expression.charAt(expression.length() - 1) > 48)
                             && (expression.charAt(expression.length() - 1) < 58)) || (expression.charAt(expression.length() - 1) == '+')
                             || (expression.charAt(expression.length() - 1) == '-') || (expression.charAt(expression.length() - 1) == '*')
-                            || (expression.charAt(expression.length() - 1) == '/')|| (expression.charAt(expression.length() - 1) == '(')
-                            ||(expression.charAt(expression.length() - 1) != ')'))
+                            || (expression.charAt(expression.length() - 1) == '/') || (expression.charAt(expression.length() - 1) == '(')
+                            || (expression.charAt(expression.length() - 1) != ')'))
                         display.setText(display.getText() + "0");
-                }else
-                    if ((expression.length() > 1)) {
+                } else if ((expression.length() > 1)) {
                     if ((expression.charAt(expression.length() - 1) == '0') &&
-                    (expression.charAt(expression.length()-2) > 47)
-                            ||(expression.charAt(expression.length()-2) < 57) &&
-                            (expression.charAt(expression.length() - 2) != '+')&&(expression.charAt(expression.length() - 2) != '-') &&
+                            (expression.charAt(expression.length() - 2) > 47)
+                            || (expression.charAt(expression.length() - 2) < 57) &&
+                            (expression.charAt(expression.length() - 2) != '+') && (expression.charAt(expression.length() - 2) != '-') &&
                             (expression.charAt(expression.length() - 2) != '*')
-                            &&(expression.charAt(expression.length() - 2) != '/')&&(expression.charAt(expression.length() - 2) != '('))
-                    display.setText(display.getText() + "0");
+                            && (expression.charAt(expression.length() - 2) != '/') && (expression.charAt(expression.length() - 2) != '('))
+                        display.setText(display.getText() + "0");
                 }
             }
         });
@@ -134,6 +137,10 @@ public class Window extends JFrame implements ItemListener {
                 String expression = display.getText();
                 if ((expression.length() == 0))//если это первая цифра-написать
                     display.setText(display.getText() + "1");
+                if((expression.length() == 1)&&(expression.charAt(expression.length() - 1) == '0')){
+                    display.setText(display.getText() + ".");
+                    display.setText(display.getText() + "1");
+                }
                 if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
                     display.setText(display.getText() + "*");
                     display.setText(display.getText() + "1");
@@ -142,12 +149,12 @@ public class Window extends JFrame implements ItemListener {
                 } else if ((expression.length() > 1)) {
                     if ((expression.charAt(expression.length() - 1) == '0') &&
                             ((expression.charAt(expression.length() - 2) > 47)
-                            && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                                    && (expression.charAt(expression.length() - 2) < 57)) || (expression.charAt(expression.length() - 2) == '.'))
                         display.setText(display.getText() + "1");
                     if ((expression.charAt(expression.length() - 1) == '0') &&
-                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                            ((expression.charAt(expression.length() - 2) == '+') || (expression.charAt(expression.length() - 2) == '-') ||
                                     (expression.charAt(expression.length() - 2) == '*')
-                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                                    || (expression.charAt(expression.length() - 2) == '/') || (expression.charAt(expression.length() - 2) == '('))) {
                         display.setText(display.getText() + ".");
                         display.setText(display.getText() + "1");
                     }
@@ -160,6 +167,10 @@ public class Window extends JFrame implements ItemListener {
                 String expression = display.getText();
                 if ((expression.length() == 0))//если это первая цифра-написать
                     display.setText(display.getText() + "2");
+                if((expression.length() == 1)&&(expression.charAt(expression.length() - 1) == '0')){
+                    display.setText(display.getText() + ".");
+                    display.setText(display.getText() + "2");
+                }
                 if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
                     display.setText(display.getText() + "*");
                     display.setText(display.getText() + "2");
@@ -168,12 +179,12 @@ public class Window extends JFrame implements ItemListener {
                 } else if ((expression.length() > 1)) {
                     if ((expression.charAt(expression.length() - 1) == '0') &&
                             ((expression.charAt(expression.length() - 2) > 47)
-                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                                    && (expression.charAt(expression.length() - 2) < 57)) || (expression.charAt(expression.length() - 2) == '.'))
                         display.setText(display.getText() + "2");
                     if ((expression.charAt(expression.length() - 1) == '0') &&
-                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                            ((expression.charAt(expression.length() - 2) == '+') || (expression.charAt(expression.length() - 2) == '-') ||
                                     (expression.charAt(expression.length() - 2) == '*')
-                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                                    || (expression.charAt(expression.length() - 2) == '/') || (expression.charAt(expression.length() - 2) == '('))) {
                         display.setText(display.getText() + ".");
                         display.setText(display.getText() + "2");
                     }
@@ -186,6 +197,10 @@ public class Window extends JFrame implements ItemListener {
                 String expression = display.getText();
                 if ((expression.length() == 0))//если это первая цифра-написать
                     display.setText(display.getText() + "3");
+                if((expression.length() == 1)&&(expression.charAt(expression.length() - 1) == '0')){
+                    display.setText(display.getText() + ".");
+                    display.setText(display.getText() + "3");
+                }
                 if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
                     display.setText(display.getText() + "*");
                     display.setText(display.getText() + "3");
@@ -194,12 +209,12 @@ public class Window extends JFrame implements ItemListener {
                 } else if ((expression.length() > 1)) {
                     if ((expression.charAt(expression.length() - 1) == '0') &&
                             ((expression.charAt(expression.length() - 2) > 47)
-                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                                    && (expression.charAt(expression.length() - 2) < 57)) || (expression.charAt(expression.length() - 2) == '.'))
                         display.setText(display.getText() + "3");
                     if ((expression.charAt(expression.length() - 1) == '0') &&
-                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                            ((expression.charAt(expression.length() - 2) == '+') || (expression.charAt(expression.length() - 2) == '-') ||
                                     (expression.charAt(expression.length() - 2) == '*')
-                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                                    || (expression.charAt(expression.length() - 2) == '/') || (expression.charAt(expression.length() - 2) == '('))) {
                         display.setText(display.getText() + ".");
                         display.setText(display.getText() + "3");
                     }
@@ -212,6 +227,10 @@ public class Window extends JFrame implements ItemListener {
                 String expression = display.getText();
                 if ((expression.length() == 0))//если это первая цифра-написать
                     display.setText(display.getText() + "4");
+                if((expression.length() == 1)&&(expression.charAt(expression.length() - 1) == '0')){
+                    display.setText(display.getText() + ".");
+                    display.setText(display.getText() + "4");
+                }
                 if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
                     display.setText(display.getText() + "*");
                     display.setText(display.getText() + "4");
@@ -220,12 +239,12 @@ public class Window extends JFrame implements ItemListener {
                 } else if ((expression.length() > 1)) {
                     if ((expression.charAt(expression.length() - 1) == '0') &&
                             ((expression.charAt(expression.length() - 2) > 47)
-                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                                    && (expression.charAt(expression.length() - 2) < 57)) || (expression.charAt(expression.length() - 2) == '.'))
                         display.setText(display.getText() + "4");
                     if ((expression.charAt(expression.length() - 1) == '0') &&
-                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                            ((expression.charAt(expression.length() - 2) == '+') || (expression.charAt(expression.length() - 2) == '-') ||
                                     (expression.charAt(expression.length() - 2) == '*')
-                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                                    || (expression.charAt(expression.length() - 2) == '/') || (expression.charAt(expression.length() - 2) == '('))) {
                         display.setText(display.getText() + ".");
                         display.setText(display.getText() + "4");
                     }
@@ -238,6 +257,10 @@ public class Window extends JFrame implements ItemListener {
                 String expression = display.getText();
                 if ((expression.length() == 0))//если это первая цифра-написать
                     display.setText(display.getText() + "5");
+                if((expression.length() == 1)&&(expression.charAt(expression.length() - 1) == '0')){
+                    display.setText(display.getText() + ".");
+                    display.setText(display.getText() + "5");
+                }
                 if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
                     display.setText(display.getText() + "*");
                     display.setText(display.getText() + "5");
@@ -246,12 +269,12 @@ public class Window extends JFrame implements ItemListener {
                 } else if ((expression.length() > 1)) {
                     if ((expression.charAt(expression.length() - 1) == '0') &&
                             ((expression.charAt(expression.length() - 2) > 47)
-                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                                    && (expression.charAt(expression.length() - 2) < 57)) || (expression.charAt(expression.length() - 2) == '.'))
                         display.setText(display.getText() + "5");
                     if ((expression.charAt(expression.length() - 1) == '0') &&
-                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                            ((expression.charAt(expression.length() - 2) == '+') || (expression.charAt(expression.length() - 2) == '-') ||
                                     (expression.charAt(expression.length() - 2) == '*')
-                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                                    || (expression.charAt(expression.length() - 2) == '/') || (expression.charAt(expression.length() - 2) == '('))) {
                         display.setText(display.getText() + ".");
                         display.setText(display.getText() + "5");
                     }
@@ -264,6 +287,10 @@ public class Window extends JFrame implements ItemListener {
                 String expression = display.getText();
                 if ((expression.length() == 0))//если это первая цифра-написать
                     display.setText(display.getText() + "6");
+                if((expression.length() == 1)&&(expression.charAt(expression.length() - 1) == '0')){
+                    display.setText(display.getText() + ".");
+                    display.setText(display.getText() + "6");
+                }
                 if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
                     display.setText(display.getText() + "*");
                     display.setText(display.getText() + "6");
@@ -272,12 +299,12 @@ public class Window extends JFrame implements ItemListener {
                 } else if ((expression.length() > 1)) {
                     if ((expression.charAt(expression.length() - 1) == '0') &&
                             ((expression.charAt(expression.length() - 2) > 47)
-                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                                    && (expression.charAt(expression.length() - 2) < 57)) || (expression.charAt(expression.length() - 2) == '.'))
                         display.setText(display.getText() + "6");
                     if ((expression.charAt(expression.length() - 1) == '0') &&
-                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                            ((expression.charAt(expression.length() - 2) == '+') || (expression.charAt(expression.length() - 2) == '-') ||
                                     (expression.charAt(expression.length() - 2) == '*')
-                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                                    || (expression.charAt(expression.length() - 2) == '/') || (expression.charAt(expression.length() - 2) == '('))) {
                         display.setText(display.getText() + ".");
                         display.setText(display.getText() + "6");
                     }
@@ -290,6 +317,10 @@ public class Window extends JFrame implements ItemListener {
                 String expression = display.getText();
                 if ((expression.length() == 0))//если это первая цифра-написать
                     display.setText(display.getText() + "7");
+                if((expression.length() == 1)&&(expression.charAt(expression.length() - 1) == '0')){
+                    display.setText(display.getText() + ".");
+                    display.setText(display.getText() + "7");
+                }
                 if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
                     display.setText(display.getText() + "*");
                     display.setText(display.getText() + "7");
@@ -298,12 +329,12 @@ public class Window extends JFrame implements ItemListener {
                 } else if ((expression.length() > 1)) {
                     if ((expression.charAt(expression.length() - 1) == '0') &&
                             ((expression.charAt(expression.length() - 2) > 47)
-                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                                    && (expression.charAt(expression.length() - 2) < 57)) || (expression.charAt(expression.length() - 2) == '.'))
                         display.setText(display.getText() + "7");
                     if ((expression.charAt(expression.length() - 1) == '0') &&
-                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                            ((expression.charAt(expression.length() - 2) == '+') || (expression.charAt(expression.length() - 2) == '-') ||
                                     (expression.charAt(expression.length() - 2) == '*')
-                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                                    || (expression.charAt(expression.length() - 2) == '/') || (expression.charAt(expression.length() - 2) == '('))) {
                         display.setText(display.getText() + ".");
                         display.setText(display.getText() + "7");
                     }
@@ -316,6 +347,10 @@ public class Window extends JFrame implements ItemListener {
                 String expression = display.getText();
                 if ((expression.length() == 0))//если это первая цифра-написать
                     display.setText(display.getText() + "8");
+                if((expression.length() == 1)&&(expression.charAt(expression.length() - 1) == '0')){
+                    display.setText(display.getText() + ".");
+                    display.setText(display.getText() + "8");
+                }
                 if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
                     display.setText(display.getText() + "*");
                     display.setText(display.getText() + "8");
@@ -324,12 +359,12 @@ public class Window extends JFrame implements ItemListener {
                 } else if ((expression.length() > 1)) {
                     if ((expression.charAt(expression.length() - 1) == '0') &&
                             ((expression.charAt(expression.length() - 2) > 47)
-                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                                    && (expression.charAt(expression.length() - 2) < 57)) || (expression.charAt(expression.length() - 2) == '.'))
                         display.setText(display.getText() + "8");
                     if ((expression.charAt(expression.length() - 1) == '0') &&
-                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                            ((expression.charAt(expression.length() - 2) == '+') || (expression.charAt(expression.length() - 2) == '-') ||
                                     (expression.charAt(expression.length() - 2) == '*')
-                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                                    || (expression.charAt(expression.length() - 2) == '/') || (expression.charAt(expression.length() - 2) == '('))) {
                         display.setText(display.getText() + ".");
                         display.setText(display.getText() + "8");
                     }
@@ -342,6 +377,10 @@ public class Window extends JFrame implements ItemListener {
                 String expression = display.getText();
                 if ((expression.length() == 0))//если это первая цифра-написать
                     display.setText(display.getText() + "9");
+                if((expression.length() == 1)&&(expression.charAt(expression.length() - 1) == '0')){
+                    display.setText(display.getText() + ".");
+                    display.setText(display.getText() + "9");
+                }
                 if ((expression.length() > 0) && (expression.charAt(expression.length() - 1) == ')')) {
                     display.setText(display.getText() + "*");
                     display.setText(display.getText() + "9");
@@ -350,12 +389,12 @@ public class Window extends JFrame implements ItemListener {
                 } else if ((expression.length() > 1)) {
                     if ((expression.charAt(expression.length() - 1) == '0') &&
                             ((expression.charAt(expression.length() - 2) > 47)
-                                    && (expression.charAt(expression.length() - 2) < 57))||(expression.charAt(expression.length() - 2)=='.'))
+                                    && (expression.charAt(expression.length() - 2) < 57)) || (expression.charAt(expression.length() - 2) == '.'))
                         display.setText(display.getText() + "9");
                     if ((expression.charAt(expression.length() - 1) == '0') &&
-                            ((expression.charAt(expression.length() - 2) == '+')||(expression.charAt(expression.length() - 2) == '-') ||
+                            ((expression.charAt(expression.length() - 2) == '+') || (expression.charAt(expression.length() - 2) == '-') ||
                                     (expression.charAt(expression.length() - 2) == '*')
-                                    ||(expression.charAt(expression.length() - 2) == '/')||(expression.charAt(expression.length() - 2) == '('))) {
+                                    || (expression.charAt(expression.length() - 2) == '/') || (expression.charAt(expression.length() - 2) == '('))) {
                         display.setText(display.getText() + ".");
                         display.setText(display.getText() + "9");
                     }
@@ -445,7 +484,17 @@ public class Window extends JFrame implements ItemListener {
         });
         buttonParenClose.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                display.setText(display.getText() + ")");
+                String expression = display.getText();
+                if (expression.length() > 0) {
+                    char ch = expression.charAt(expression.length()-1);
+                    if ((ch == '+') || (ch == '-') || (ch == '*') || (ch == '/') || (ch == '.')) {
+                        expression = expression.substring(0, expression.length() - 1);
+                        display.removeAll();
+                        display.setText(expression);
+                    }
+                    display.setText(display.getText() + ")");
+                }
+
             }
         });
         buttonComma.addActionListener(new ActionListener() {
@@ -471,11 +520,11 @@ public class Window extends JFrame implements ItemListener {
                 try {
                     String expression = display.getText();
                     if (expression.length() > 0) {
-                        Long exp=Long.parseLong(expression);
-                        if((exp<21)&&(exp>0)){
-                        Long result = Factorial.factorial(exp);
-                        display.setText(Long.toString(result));}
-                        else JOptionPane.showMessageDialog(new JFrame(), "Error!\n" +
+                        Long exp = Long.parseLong(expression);
+                        if ((exp < 21) && (exp > 0)) {
+                            Long result = Factorial.factorial(exp);
+                            display.setText(Long.toString(result));
+                        } else JOptionPane.showMessageDialog(new JFrame(), "Error!\n" +
                                 "The factorial of a given number is too large");
                     }
 
@@ -504,8 +553,12 @@ public class Window extends JFrame implements ItemListener {
                     } else {
                         InToPost inToPost = new InToPost(StrToMass.mass(expression));
                         ParsePost parsePost = new ParsePost(inToPost.doTrans());
+                        Double result=(parsePost.doParse());
+                        if((result!=Infinity) && (result!=-Infinity)&&(result!=NaN)){
                         display.removeAll();
-                        display.setText(Double.toString(parsePost.doParse()));
+                        display.setText(Double.toString(result));}
+                        else JOptionPane.showMessageDialog(new JFrame(), "Error!Can not be divided by zero");
+
                     }
                 } catch (Exception e1) {
                     JOptionPane.showMessageDialog(new JFrame(), "Error!\n" +
@@ -514,37 +567,127 @@ public class Window extends JFrame implements ItemListener {
             }
 
         });
-        setLayout(new BorderLayout());
-        add(display, "North");
-        add(buttonPanel, "Center");
-        group.add(simpleCalc);
-        group.add(factorial);
         buttonFactorial.setEnabled(false);
         simpleCalc.addItemListener(this);
         factorial.addItemListener(this);
-        buttonPanel.add(simpleCalc);
-        buttonPanel.add(factorial);
-        buttonPanel.add(buttonBackspaceSymbol);
-        buttonPanel.add(buttonCancel);
-        buttonPanel.add(buttonFactorial);
-        buttonPanel.add(buttonParenOpen);
-        buttonPanel.add(buttonParenClose);
-        buttonPanel.add(buttonDivide);
-        buttonPanel.add(button7);
-        buttonPanel.add(button8);
-        buttonPanel.add(button9);
-        buttonPanel.add(buttonMul);
-        buttonPanel.add(button4);
-        buttonPanel.add(button5);
-        buttonPanel.add(button6);
-        buttonPanel.add(buttonSub);
-        buttonPanel.add(button1);
-        buttonPanel.add(button2);
-        buttonPanel.add(button3);
-        buttonPanel.add(buttonSum);
-        buttonPanel.add(buttonComma);
-        buttonPanel.add(button0);
-        buttonPanel.add(buttonStart);
+        setLayout(layout_calc);
+        /************display***********/
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = GridBagConstraints.REMAINDER; //заполнить строку до конца
+        c.insets = new Insets(0,10,10,10); //отступы
+        c.ipadx = 382;
+        c.ipady = 10; // увеличить размер компонента на 10 пикселей
+        layout_calc.setConstraints(display,c);
+        add(display);
+        /*************radio_simplecalc*****************/
+        c.gridwidth = 1; // компонент занимает 1 ячейку
+        c.insets = new Insets(0,10,0,0); //отступы
+        c.ipadx = 10;
+        c.ipady = 24;
+        layout_calc.setConstraints(simpleCalc,c);
+        add(simpleCalc);
+        group.add(simpleCalc);
+        simpleCalc.addItemListener(this);
+        /*************radio_fact*********/
+        c.ipadx = 20;
+        c.insets = new Insets(0,0,0,0);
+        layout_calc.setConstraints(factorial,c);
+        add(factorial);
+        group.add(factorial);
+        buttonFactorial.setEnabled(false);
+        factorial.addItemListener(this);
+        /************backspace************/
+        c.ipadx = 50;
+        layout_calc.setConstraints(buttonBackspaceSymbol,c);
+        add(buttonBackspaceSymbol);
+        /************cancel***********/
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0,0,0,10);
+        layout_calc.setConstraints(buttonCancel,c);
+        add(buttonCancel);
+        /***********factorial************/
+        c.insets = new Insets(0,10,0,0);
+        c.gridwidth = 1;
+        layout_calc.setConstraints(buttonFactorial,c);
+        add(buttonFactorial);
+        /***********parenOpen************/
+        c.insets = new Insets(0,0,0,0);
+        layout_calc.setConstraints(buttonParenOpen,c);
+        add(buttonParenOpen);
+        /***********parenClose************/
+        layout_calc.setConstraints(buttonParenClose,c);
+        add(buttonParenClose);
+        /***********divide************/
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0,0,0,10);
+        layout_calc.setConstraints(buttonDivide,c);
+        add(buttonDivide);
+        /***********button7***********/
+        c.insets = new Insets(0,10,0,0);
+        c.gridwidth = 1;
+        layout_calc.setConstraints(button7,c);
+        add(button7);
+        /***********button8************/
+        c.insets = new Insets(0,0,0,0);
+        layout_calc.setConstraints(button8,c);
+        add(button8);
+        /***********button9************/
+        layout_calc.setConstraints(button9,c);
+        add(button9);
+        /***********mul************/
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0,0,0,10);
+        layout_calc.setConstraints(buttonMul,c);
+        add(buttonMul);
+        /***********button4***********/
+        c.insets = new Insets(0,10,0,0);
+        c.gridwidth = 1;
+        layout_calc.setConstraints(button4,c);
+        add(button4);
+        /***********button5************/
+        c.insets = new Insets(0,0,0,0);
+        layout_calc.setConstraints(button5,c);
+        add(button5);
+        /***********button6************/
+        layout_calc.setConstraints(button6,c);
+        add(button6);
+        /***********sub************/
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0,0,0,10);
+        layout_calc.setConstraints(buttonSub,c);
+        add(buttonSub);
+        /***********button1***********/
+        c.insets = new Insets(0,10,0,0);
+        c.gridwidth = 1;
+        layout_calc.setConstraints(button1,c);
+        add(button1);
+        /***********button2************/
+        c.insets = new Insets(0,0,0,0);
+        layout_calc.setConstraints(button2,c);
+        add(button2);
+        /***********button3************/
+        layout_calc.setConstraints(button3,c);
+        add(button3);
+        /***********sum************/
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0,0,0,10);
+        layout_calc.setConstraints(buttonSum,c);
+        add(buttonSum);
+        /***********button_comma***********/
+        c.insets = new Insets(0,10,0,0);
+        c.gridwidth = 1;
+        layout_calc.setConstraints(buttonComma,c);
+        add(buttonComma);
+        /***********button0************/
+        c.insets = new Insets(0,0,0,0);
+        layout_calc.setConstraints(button0,c);
+        add(button0);
+        /***********buttonStart************/
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0,0,0,10);
+        layout_calc.setConstraints(buttonStart,c);
+        add(buttonStart);
+
         setVisible(true);
     }
 
@@ -558,14 +701,10 @@ public class Window extends JFrame implements ItemListener {
             display.setText(expression);
         }
     }
-
-    public static void main(String[] args) {
-        new Window();
-    }
-
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getItemSelectable() == simpleCalc) {
+            display.setText("");
             buttonFactorial.setEnabled(false);
             buttonComma.setEnabled(true);
             buttonSum.setEnabled(true);
@@ -578,6 +717,7 @@ public class Window extends JFrame implements ItemListener {
 
         }
         if (e.getItemSelectable() == factorial) {
+            display.setText("");
             buttonFactorial.setEnabled(true);
             buttonComma.setEnabled(false);
             buttonSum.setEnabled(false);
@@ -590,4 +730,8 @@ public class Window extends JFrame implements ItemListener {
 
         }
     }
+    public static void main(String[] args) {
+        new Window();
+    }
+
 }

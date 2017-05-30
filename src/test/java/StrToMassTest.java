@@ -21,7 +21,6 @@ public void MassTest(){
     result1.add("(");
     result1.add("-45");
     result1.add(")");
-   //System.out.print(StrToMass.mass(s));
     assertThat(StrToMass.mass(s).size(),is(result1.size()));
    }
 }
